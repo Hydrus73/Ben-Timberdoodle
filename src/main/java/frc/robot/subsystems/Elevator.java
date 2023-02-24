@@ -9,11 +9,15 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import frc.robot.Auto.SystemsCheck.SubChecker;
+import frc.robot.Auto.SystemsCheck.SystemsCheck;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants;
 
-public class Elevator extends SubsystemBase {
+public class Elevator extends SubsystemBase implements SubChecker {
   ElevatorOdometry elevatorOdometry;
   CANSparkMax left, right;
   SparkMaxPIDController leftPID;
@@ -40,6 +44,10 @@ public class Elevator extends SubsystemBase {
     leftPID.setReference(position, ControlType.kPosition);
   }
 
+  public void reset() {
+    setPosition(0);
+  }
+
   public void setVelocity(double velocity) {
     leftPID.setReference(velocity, ControlType.kVelocity);
   }
@@ -48,4 +56,22 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     elevatorOdometry.update(leftEncoder.getPosition(), leftEncoder.getVelocity());
   }
+
+  public Command check(boolean safe) {
+    if (!safe) {
+      return new InstantCommand();
+    }
+    return new InstantCommand(() -> {
+      double time = System.currentTimeMillis();
+      boolean working = false;
+      setPosition(0.1);
+      while (System.currentTimeMillis() - time < 2000) {}
+      if (leftEncoder.getPosition() > 0.05) {
+        working = true;
+      }
+      SystemsCheck.setSystemStatus(this, working);
+      reset();
+    }, this);
+  }
+
 }
