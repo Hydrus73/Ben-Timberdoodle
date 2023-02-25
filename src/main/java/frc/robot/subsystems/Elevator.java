@@ -38,7 +38,7 @@ public class Elevator extends SubsystemBase implements SubChecker {
     leftPID.setP(Constants.ElevatorConstants.kP);
     leftPID.setI(Constants.ElevatorConstants.kI);
     leftPID.setD(Constants.ElevatorConstants.kD);
-    leftPID.setFF(Constants.ElevatorConstants.kFF); 
+    leftPID.setFF(Constants.ElevatorConstants.kFF);
     leftEncoder = left.getEncoder();
     leftEncoder.setPositionConversionFactor(Constants.ElevatorConstants.POSITION_CONVERSION_FACTOR);
     leftEncoder.setVelocityConversionFactor(Constants.ElevatorConstants.VELOCITY_CONVERSION_FACTOR);
