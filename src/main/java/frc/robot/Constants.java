@@ -23,10 +23,11 @@ public final class Constants {
     public static final double GEARBOX_RATIO = 11.25;
 
     public static final double SPOOL_RADIUS = Units.inchesToMeters(1.25);
+    public static final double SPOOL_CIRCUMFERENCE = 2*Math.PI*SPOOL_RADIUS;
 
-    public static final double MAX_HEIGHT = Units.inchesToMeters(65);
+    public static final double MAX_HEIGHT = 1.65;
 
-    public static final double POSITION_CONVERSION_FACTOR = 2*Math.PI*SPOOL_RADIUS/GEARBOX_RATIO;
+    public static final double POSITION_CONVERSION_FACTOR = SPOOL_CIRCUMFERENCE/GEARBOX_RATIO;
     public static final double VELOCITY_CONVERSION_FACTOR = POSITION_CONVERSION_FACTOR/60;
 
     public static final double kP = 0.0;
@@ -35,4 +36,11 @@ public final class Constants {
     public static final double kFF = 0.0;
 
   }
+
+  public static final class IntakeConstant {
+
+    public static final int intakeID = 0;
+
+  }
+
 }

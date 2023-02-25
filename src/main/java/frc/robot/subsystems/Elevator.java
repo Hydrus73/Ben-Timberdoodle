@@ -7,8 +7,11 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
 import frc.robot.Auto.SystemsCheck.SubChecker;
 import frc.robot.Auto.SystemsCheck.SystemsCheck;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,9 +25,9 @@ public class Elevator extends SubsystemBase implements SubChecker {
   CANSparkMax left, right;
   SparkMaxPIDController leftPID;
   RelativeEncoder leftEncoder;
+  SparkMaxAbsoluteEncoder absoluteEncoder;
   /** Creates a new Elevator. */
   public Elevator() {
-    elevatorOdometry = new ElevatorOdometry(0, 0);
     left = new CANSparkMax(Constants.ElevatorConstants.leftID, MotorType.kBrushless);
     right = new CANSparkMax(Constants.ElevatorConstants.rightID, MotorType.kBrushless);
     left.setInverted(true);
@@ -38,6 +41,11 @@ public class Elevator extends SubsystemBase implements SubChecker {
     leftEncoder = left.getEncoder();
     leftEncoder.setPositionConversionFactor(Constants.ElevatorConstants.POSITION_CONVERSION_FACTOR);
     leftEncoder.setVelocityConversionFactor(Constants.ElevatorConstants.VELOCITY_CONVERSION_FACTOR);
+    absoluteEncoder = left.getAbsoluteEncoder(Type.kDutyCycle);
+    double startRotation = absoluteEncoder.getPosition();
+    double startPosition = startRotation*Constants.ElevatorConstants.SPOOL_CIRCUMFERENCE;
+    leftEncoder.setPosition(startPosition);
+    elevatorOdometry = new ElevatorOdometry(startPosition, 0);
   }
 
   public void setPosition(double position) {
