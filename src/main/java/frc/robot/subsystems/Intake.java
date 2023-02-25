@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase implements SubChecker {
   }
 
   public void out() {
-    intake.set(0.5);
+    intake.set(-0.5);
   }
 
   public void stop() {
