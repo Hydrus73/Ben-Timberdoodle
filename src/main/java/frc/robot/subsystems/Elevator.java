@@ -14,6 +14,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import frc.robot.Auto.SystemsCheck.SubChecker;
 import frc.robot.Auto.SystemsCheck.SystemsCheck;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -49,6 +50,7 @@ public class Elevator extends SubsystemBase implements SubChecker {
   }
 
   public void setPosition(double position) {
+    position = MathUtil.clamp(position, 0, Constants.ElevatorConstants.MAX_HEIGHT);
     leftPID.setReference(position, ControlType.kPosition);
   }
 
