@@ -13,13 +13,19 @@ public class Lights extends SubsystemBase {
   AddressableLED lights;
   AddressableLEDBuffer ledBuffer;
   boolean runRainbow;
-  int startHue;
+  int startRainbowHue;
+  boolean runCube;
+  boolean runCone;
+  int startDefaultIndex;
   /** Creates a new Lights. */
   public Lights() {
     lights = new AddressableLED(Constants.LightsConstants.PORT);
     ledBuffer = new AddressableLEDBuffer(Constants.LightsConstants.COUNT);
-    startHue = 0;
+    startRainbowHue = 0;
     runRainbow = false;
+    runCube = false;
+    runCone = false;
+    startDefaultIndex = 0;
 
     lights.setLength(ledBuffer.getLength());
     lights.setData(ledBuffer);
@@ -28,10 +34,10 @@ public class Lights extends SubsystemBase {
 
   public void rainbow() {
     for (int i = 0; i < ledBuffer.getLength(); i++) {
-      ledBuffer.setHSV(i, (startHue + 2*i) % 180, 200, 100);
+      ledBuffer.setHSV(i, (startRainbowHue + 2*i) % 180, 200, 100);
     }
     lights.setData(ledBuffer);
-    startHue = (startHue + 2) % 180;
+    startRainbowHue = (startRainbowHue + 2) % 180;
   }
 
   public void setRainbow(boolean on) {
@@ -45,11 +51,19 @@ public class Lights extends SubsystemBase {
     lights.setData(ledBuffer);
   }
 
+  public void setCone(boolean on) {
+    runCone = on;
+  }
+
   public void cube() {
     for (int i = 0; i < ledBuffer.getLength(); i++) {
       ledBuffer.setRGB(i, 159, 24, 237);
     }
     lights.setData(ledBuffer);
+  }
+
+  public void setCube(boolean on) {
+    runCube = on;
   }
 
   public void stop() {
@@ -60,11 +74,33 @@ public class Lights extends SubsystemBase {
     lights.start();
   }
 
+  public void defaultColor() {
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+      if ((i + startDefaultIndex)/3 % 2 == 0) {
+        ledBuffer.setRGB(i, 252, 236, 3);
+      }
+      else {
+        ledBuffer.setRGB(i, 10, 10, 245);
+      }
+    }
+    lights.setData(ledBuffer);
+    startDefaultIndex++;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     if (runRainbow) {
       rainbow();
+    }
+    else if (runCone) {
+      cone();
+    }
+    else if (runCube) {
+      cube();
+    }
+    else {
+      defaultColor();
     }
   }
 }
