@@ -151,4 +151,9 @@ public static class WristConstants {
   public static final double kFF = 0.0;
 }
 
+public static class LightsConstants {
+  public static final int PORT = 0;
+  public static final int COUNT = 1000;
+}
+
 }
