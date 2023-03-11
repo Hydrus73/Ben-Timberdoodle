@@ -156,4 +156,14 @@ public static class LightsConstants {
   public static final int COUNT = 1000;
 }
 
+public static class AutoConstants {
+  public static final double TRANSLATIONkP = 0.0;
+  public static final double TRANSLATIONkI = 0.0;
+  public static final double TRANSLATIONkD = 0.0;
+
+  public static final double ROTATIONkP = 0.0;
+  public static final double ROTATIONkI = 0.0;
+  public static final double ROTATIONkD = 0.0;
+}
+
 }
