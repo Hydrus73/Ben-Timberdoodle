@@ -17,6 +17,8 @@ public class Lights extends SubsystemBase {
   boolean runCube;
   boolean runCone;
   int startDefaultIndex;
+  boolean bad;
+  boolean good;
   /** Creates a new Lights. */
   public Lights() {
     lights = new AddressableLED(Constants.LightsConstants.PORT);
@@ -26,6 +28,8 @@ public class Lights extends SubsystemBase {
     runCube = false;
     runCone = false;
     startDefaultIndex = 0;
+    bad = false;
+    good = false;
 
     lights.setLength(ledBuffer.getLength());
     lights.setData(ledBuffer);
@@ -87,6 +91,30 @@ public class Lights extends SubsystemBase {
     startDefaultIndex++;
   }
 
+  public void bad() {
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+      ledBuffer.setRGB(i, 250, 10, 10);
+    }
+    lights.setData(ledBuffer);
+    startDefaultIndex++;
+  }
+
+  public void setBad(boolean on) {
+    bad = on;
+  }
+
+  public void good() {
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+      ledBuffer.setRGB(i, 10, 250, 10);
+    }
+    lights.setData(ledBuffer);
+    startDefaultIndex++;
+  }
+
+  public void setGood(boolean on) {
+    good = on;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -98,6 +126,12 @@ public class Lights extends SubsystemBase {
     }
     else if (runCube) {
       cube();
+    }
+    else if (bad) {
+      bad();
+    }
+    else if (good) {
+      good();
     }
     else {
       defaultColor();
