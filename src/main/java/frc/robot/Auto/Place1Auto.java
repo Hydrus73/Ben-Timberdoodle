@@ -21,16 +21,16 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Drivetrain.DrivetrainSubsystem;
 
-public class Place1AndBalanceAuto {
+public class Place1Auto {
   ArrayList<PathPlannerTrajectory> trajectories;
   HashMap<String, Command> events;
   Command fullAutoCommand;
-  /** Creates a new Place1AndBalanceAuto. */
-  public Place1AndBalanceAuto(DrivetrainSubsystem drivetrain) {
+  /** Creates a new Place1Auto. */
+  public Place1Auto(DrivetrainSubsystem drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    trajectories = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Place1AndBalance", new PathConstraints(Constants.AutoConstants.MAX_VELOCITY, Constants.AutoConstants.MAX_ACCELERATION));
+    trajectories = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Place1", new PathConstraints(Constants.AutoConstants.MAX_VELOCITY, Constants.AutoConstants.MAX_ACCELERATION));
     events.put("PlaceStartCone", new PlaceCone());
-    events.put("Balance", new AutoLevel(drivetrain));
+    events.put("PickUpCone", new GetCone());
     
     SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
       () -> drivetrain.getPose(),
