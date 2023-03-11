@@ -164,6 +164,9 @@ public static class AutoConstants {
   public static final double ROTATIONkP = 0.0;
   public static final double ROTATIONkI = 0.0;
   public static final double ROTATIONkD = 0.0;
+
+  public static final double MAX_VELOCITY = 2.0;
+  public static final double MAX_ACCELERATION = 1.0;
 }
 
 }

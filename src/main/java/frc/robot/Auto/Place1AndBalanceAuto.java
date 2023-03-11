@@ -28,7 +28,7 @@ public class Place1AndBalanceAuto {
   /** Creates a new Place2AndBalanceAuto. */
   public Place1AndBalanceAuto(DrivetrainSubsystem drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    trajectories = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Place1AndBalance", new PathConstraints(2, 1));
+    trajectories = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Place1AndBalance", new PathConstraints(Constants.AutoConstants.MAX_VELOCITY, Constants.AutoConstants.MAX_ACCELERATION));
     events.put("PlaceStartCone", new PlaceCone());
     events.put("Balance", new AutoLevel(drivetrain));
     

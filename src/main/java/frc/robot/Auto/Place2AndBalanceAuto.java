@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Auto.SystemsCheck;
+package frc.robot.Auto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.Auto.AutoLevel;
 import frc.robot.Drivetrain.DrivetrainSubsystem;
 
 public class Place2AndBalanceAuto {
@@ -29,7 +28,7 @@ public class Place2AndBalanceAuto {
   /** Creates a new Place2AndBalanceAuto. */
   public Place2AndBalanceAuto(DrivetrainSubsystem drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    trajectories = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Place2AndBalance", new PathConstraints(2, 1));
+    trajectories = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Place2AndBalance", new PathConstraints(Constants.AutoConstants.MAX_VELOCITY, Constants.AutoConstants.MAX_ACCELERATION));
     events.put("PlaceStartCone", new PlaceCone());
     events.put("PickUpCone", new GetCone());
     events.put("PlaceSecondCone", new PlaceCone());
